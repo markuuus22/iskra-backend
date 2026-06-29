@@ -132,6 +132,15 @@ def parse_tasks(raw: str) -> list[dict]:
 @app.get("/")
 def health():
     return {"ok": True, "service": "iskra"}
+    @app.get("/debug")
+def debug():
+    key = os.environ.get("LLM_API_KEY", "")
+    return {
+        "key_seen": bool(key),
+        "key_len": len(key),
+        "model": os.environ.get("LLM_MODEL", ""),
+        "base_url": os.environ.get("LLM_BASE_URL", ""),
+    }
 
 
 @app.post("/generate")
